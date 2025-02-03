@@ -1470,6 +1470,32 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "CommonLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/CommonLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CommonLayer.dll": {}
+        }
+      },
+      "RepositoryLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "CommonLayer": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "3.1.0",
+          "Microsoft.EntityFrameworkCore.Relational": "3.1.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "3.1.0"
+        },
+        "compile": {
+          "bin/placeholder/RepositoryLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/RepositoryLayer.dll": {}
+        }
       }
     }
   },
@@ -5176,6 +5202,16 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "CommonLayer/1.0.0": {
+      "type": "project",
+      "path": "../CommonLayer/CommonLayer.csproj",
+      "msbuildProject": "../CommonLayer/CommonLayer.csproj"
+    },
+    "RepositoryLayer/1.0.0": {
+      "type": "project",
+      "path": "../RepositoryLayer/RepositoryLayer.csproj",
+      "msbuildProject": "../RepositoryLayer/RepositoryLayer.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -5184,7 +5220,8 @@
       "Microsoft.EntityFrameworkCore.Design >= 3.1.0",
       "Microsoft.EntityFrameworkCore.Relational >= 3.1.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.0",
-      "Microsoft.EntityFrameworkCore.Tools >= 3.1.0"
+      "Microsoft.EntityFrameworkCore.Tools >= 3.1.0",
+      "RepositoryLayer >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -5219,7 +5256,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\RepositoryLayer.csproj": {
+              "projectPath": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\RepositoryLayer.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
