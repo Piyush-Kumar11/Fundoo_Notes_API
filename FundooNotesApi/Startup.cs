@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ManagerLayer.Interfaces;
+using ManagerLayer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RepositoryLayer.Context;
+using RepositoryLayer.Interfaces;
+using RepositoryLayer.Services;
 
 namespace FundooNotesApi
 {
@@ -29,9 +33,13 @@ namespace FundooNotesApi
         {
             services.AddControllers();
 
-            // Configures the DbContext to use SQL Server as the database provider.
-            // The connection string is fetched from the application's configuration settings.
+            /*
+             * AddDbContext extension method to register our ApplicationContext class into the IOC container. 
+             * Inside the UseSqlServer method we are providing the connection string to our context class
+             */
             services.AddDbContext<FundooDBContext>(a => a.UseSqlServer(Configuration["ConnectionStrings:DBConnection"]));
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IUserManager, UserManager>();
 
         }
 

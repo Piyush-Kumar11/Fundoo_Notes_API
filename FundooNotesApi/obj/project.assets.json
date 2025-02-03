@@ -1481,6 +1481,19 @@
           "bin/placeholder/CommonLayer.dll": {}
         }
       },
+      "ManagerLayer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "RepositoryLayer": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/ManagerLayer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ManagerLayer.dll": {}
+        }
+      },
       "RepositoryLayer/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -5208,6 +5221,11 @@
       "path": "../CommonLayer/CommonLayer.csproj",
       "msbuildProject": "../CommonLayer/CommonLayer.csproj"
     },
+    "ManagerLayer/1.0.0": {
+      "type": "project",
+      "path": "../ManagerLayer/ManagerLayer.csproj",
+      "msbuildProject": "../ManagerLayer/ManagerLayer.csproj"
+    },
     "RepositoryLayer/1.0.0": {
       "type": "project",
       "path": "../RepositoryLayer/RepositoryLayer.csproj",
@@ -5216,6 +5234,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "ManagerLayer >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 3.1.0",
       "Microsoft.EntityFrameworkCore.Design >= 3.1.0",
       "Microsoft.EntityFrameworkCore.Relational >= 3.1.0",
@@ -5257,6 +5276,9 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
+            "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\ManagerLayer\\ManagerLayer.csproj": {
+              "projectPath": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\ManagerLayer\\ManagerLayer.csproj"
+            },
             "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\RepositoryLayer.csproj": {
               "projectPath": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\RepositoryLayer.csproj"
             }
