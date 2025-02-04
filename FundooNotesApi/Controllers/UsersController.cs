@@ -21,15 +21,36 @@ namespace FundooNotesApi.Controllers
         [Route("Reg")]
         public IActionResult Register(RegisterModel model)
         {
-            var result = manager.Registration(model);
-            if (result != null)
+            var checkEmail = manager.MailExist(model.Email);
+            if(checkEmail)
             {
-                return Ok(new ResponseModel<UserEntity> { Success = true, Message = "Register Successful", Data = result });
+                return BadRequest(new ResponseModel<UserEntity> { Success = false, Message = "Email Already Exist!" });
             }
             else
             {
-                return BadRequest(new ResponseModel<UserEntity> { Success = false, Message = "Register Failed" });
+                var result = manager.Registration(model);
+                if (result != null)
+                {
+                    return Ok(new ResponseModel<UserEntity> { Success = true, Message = "Register Successful", Data = result });
+                }
+                else
+                {
+                    return BadRequest(new ResponseModel<UserEntity> { Success = false, Message = "Register Failed" });
+                }
             }
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public IActionResult Login(LoginModel login)
+        {
+            var result = manager.Login(login);
+            if (result == "Login Successful")
+            {
+                return Ok(new ResponseModel<string> { Success = true, Message = result });
+            }
+
+            return BadRequest(new ResponseModel<string> { Success = false, Message = result });
         }
     }
 }

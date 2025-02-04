@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using CommonLayer.Models;
 using Microsoft.Extensions.Configuration;
@@ -30,7 +31,7 @@ namespace RepositoryLayer.Services
             users.DOB = model.DOB;
             users.Gender = model.Gender;
             users.Email = model.Email;
-            users.Password = model.Password;
+            users.Password = EncodePassword(model.Password);
 
             // Adding and saving the new user entity to the database
             context.Users.Add(users);
@@ -38,6 +39,27 @@ namespace RepositoryLayer.Services
 
             return users;
         }
-        
+
+        public UserEntity Login(LoginModel login)
+        {
+            string encodedPassword = EncodePassword(login.Password);
+            return context.Users.FirstOrDefault(e => e.Email == login.Email && e.Password == encodedPassword);
+        }
+
+        public static string EncodePassword(string password)
+        {
+            try
+            {
+                byte[] encData_byte = new byte[password.Length];
+                encData_byte = System.Text.Encoding.UTF8.GetBytes(password);
+                string encodedData = Convert.ToBase64String(encData_byte);
+                return encodedData;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error in base64Encode" + ex.Message);
+            }
+        }
+
     }
 }

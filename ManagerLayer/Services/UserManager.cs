@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using CommonLayer.Models;
 using ManagerLayer.Interfaces;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entities;
 using RepositoryLayer.Interfaces;
+using RepositoryLayer.Services;
 
 namespace ManagerLayer.Services
 {
@@ -25,6 +27,29 @@ namespace ManagerLayer.Services
         public UserEntity Registration(RegisterModel model)
         {
             return user.Registration(model);
+        }
+
+        public bool MailExist(string email)
+        {
+            var isExist = this.context.Users.FirstOrDefault(e =>e.Email == email);
+            if (isExist != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public string Login(LoginModel login)
+        {
+            var encodedPassword = UserRepository.EncodePassword(login.Password);
+            var userEntity = context.Users.FirstOrDefault(e => e.Email == login.Email && e.Password == encodedPassword);
+
+            if (userEntity != null)
+            {
+                return "Login Successful";
+            }
+
+            return "Invalid Email or Password";
         }
     }
 }

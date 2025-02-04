@@ -9,6 +9,8 @@ namespace ManagerLayer.Interfaces
     public interface IUserManager
     {
         public UserEntity Registration(RegisterModel model);
+        public bool MailExist(string email);
+        public string Login(LoginModel login);
 
     }
 }
