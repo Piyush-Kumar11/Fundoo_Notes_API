@@ -41,12 +41,11 @@ namespace ManagerLayer.Services
 
         public string Login(LoginModel login)
         {
-            var encodedPassword = UserRepository.EncodePassword(login.Password);
-            var userEntity = context.Users.FirstOrDefault(e => e.Email == login.Email && e.Password == encodedPassword);
+            var token = user.Login(login);
 
-            if (userEntity != null)
+            if (token != null)
             {
-                return "Login Successful";
+                return token;
             }
 
             return "Invalid Email or Password";

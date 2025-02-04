@@ -45,13 +45,15 @@ namespace FundooNotesApi.Controllers
         public IActionResult Login(LoginModel login)
         {
             var result = manager.Login(login);
-            if (result == "Login Successful")
+
+            if (result != "Invalid Email or Password")
             {
-                return Ok(new ResponseModel<string> { Success = true, Message = result });
+                return Ok(new ResponseModel<string> { Success = true, Message = "Login Successful", Data = result });
             }
 
             return BadRequest(new ResponseModel<string> { Success = false, Message = result });
         }
+
 
         [HttpPost]
         [Route("ForgetPassword")]

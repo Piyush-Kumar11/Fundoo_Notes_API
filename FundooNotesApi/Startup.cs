@@ -41,6 +41,7 @@ namespace FundooNotesApi
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserManager, UserManager>();
 
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +55,14 @@ namespace FundooNotesApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            // This middleware serves generated Swagger document as a JSON endpoint
+            app.UseSwagger();
+
+            // This middleware serves the Swagger documentation UI
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fundoo API V1");
+            });
 
             app.UseAuthorization();
 

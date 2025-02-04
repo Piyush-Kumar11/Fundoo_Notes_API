@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using CommonLayer.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entities;
 using RepositoryLayer.Interfaces;
@@ -38,12 +41,6 @@ namespace RepositoryLayer.Services
             context.SaveChanges();
 
             return users;
-        }
-
-        public UserEntity Login(LoginModel login)
-        {
-            string encodedPassword = EncodePassword(login.Password);
-            return context.Users.FirstOrDefault(e => e.Email == login.Email && e.Password == encodedPassword);
         }
 
         public ForgetPasswordModel ForgetPassword(string email)
@@ -81,5 +78,36 @@ namespace RepositoryLayer.Services
             }
         }
 
+        private string GenerateJWTToken(string email, int userID)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new[]
+            {
+                new Claim("Email",email),
+                new Claim("UserID",userID.ToString())
+            };
+            var token = new JwtSecurityToken(configuration["Jwt:Issuer"],
+                configuration["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddMinutes(15),
+                signingCredentials: credentials);
+
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+
+        }
+
+        public string Login(LoginModel login)
+        {
+            string encodedPassword = EncodePassword(login.Password);
+            var check = context.Users.FirstOrDefault(e => e.Email == login.Email && e.Password == encodedPassword);
+            if (check != null)
+            {
+                var token = GenerateJWTToken(check.Email, check.UserID);
+                return token;
+            }
+            return null;
+        }
     }
 }

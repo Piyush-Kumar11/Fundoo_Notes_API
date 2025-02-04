@@ -50,3 +50,16 @@ C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\CommonLayer.pdb
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\ManagerLayer.dll
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\ManagerLayer.pdb
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Logging.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\obj\Debug\netcoreapp3.1\FundooNotesApi.MvcApplicationPartsAssemblyInfo.cs
