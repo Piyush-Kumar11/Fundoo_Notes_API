@@ -3,17 +3,7 @@
   "WorkspaceRootPath": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\fundoonotesapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D4657FDB-9979-4F4C-8D4F-F32A23D4D3DB}|..\\ManagerLayer\\ManagerLayer.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\managerlayer\\services\\usermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1A3A2775-AE9A-491C-8848-B008F03AE489}|..\\RepositoryLayer\\RepositoryLayer.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\repositorylayer\\services\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A3A2775-AE9A-491C-8848-B008F03AE489}|..\\RepositoryLayer\\RepositoryLayer.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\repositorylayer\\interfaces\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -28,53 +18,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
-              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "Controllers\\UsersController.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAYwDIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T09:33:20.241Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "UserManager.cs",
-              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\ManagerLayer\\Services\\UserManager.cs",
-              "RelativeDocumentMoniker": "..\\ManagerLayer\\Services\\UserManager.cs",
-              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\ManagerLayer\\Services\\UserManager.cs",
-              "RelativeToolTip": "..\\ManagerLayer\\Services\\UserManager.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAYwC8AAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T09:32:13.761Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "IUserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\Interfaces\\IUserRepository.cs",
-              "RelativeDocumentMoniker": "..\\RepositoryLayer\\Interfaces\\IUserRepository.cs",
-              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\Interfaces\\IUserRepository.cs",
-              "RelativeToolTip": "..\\RepositoryLayer\\Interfaces\\IUserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T08:59:37.042Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\Services\\UserRepository.cs",
               "RelativeDocumentMoniker": "..\\RepositoryLayer\\Services\\UserRepository.cs",
               "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\Services\\UserRepository.cs",
               "RelativeToolTip": "..\\RepositoryLayer\\Services\\UserRepository.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAAmwHEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T08:51:30.365Z",
+              "WhenOpened": "2025-02-04T10:43:49.426Z",
               "EditorCaption": ""
             }
           ]

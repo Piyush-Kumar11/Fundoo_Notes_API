@@ -49,18 +49,17 @@ namespace RepositoryLayer.Services
 
             if (user == null)
             {
-                return new ForgetPasswordModel
-                {
-                    Email = email,
-                    Message = "Email not found!"
-                };
-            }
+                ForgetPasswordModel forgetPasswordModel = new ForgetPasswordModel();
+                forgetPasswordModel.UserId = user.UserID;
+                forgetPasswordModel.Email = email;
+                forgetPasswordModel.Token = GenerateJWTToken(email, user.UserID);
 
-            return new ForgetPasswordModel
+                return forgetPasswordModel;
+            }
+            else
             {
-                Email = email,
-                Message = "An email has been sent to reset your password !"
-            };
+                throw new Exception("User Not Exist for required email!");
+            }
         }
 
         public static string EncodePassword(string password)

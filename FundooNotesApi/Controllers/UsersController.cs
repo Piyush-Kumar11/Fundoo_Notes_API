@@ -1,4 +1,6 @@
-﻿using CommonLayer.Models;
+﻿using System;
+using System.Threading.Tasks;
+using CommonLayer.Models;
 using ManagerLayer.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -55,27 +57,42 @@ namespace FundooNotesApi.Controllers
         }
 
 
-        [HttpPost]
-        [Route("ForgetPassword")]
-        public IActionResult ForgetPassword(string email)
+        [HttpGet("ForgetPassword")]
+        public async Task<IActionResult> ForgetPassword(string email)
         {
-            var result = manager.ForgetPassword(email);
-
-            if (result.Message == "Email not found!")
+            try
             {
-                return BadRequest(new ResponseModel<ForgetPasswordModel>
-                {
-                    Success = false,
-                    Message = result.Message
-                });
+                ForgetPasswordModel forgetPasswordModel = manager.ForgetPassword(email);
+                Send send = new Send();
+
+                send.SendMail(forgetPasswordModel.Email,forgetPasswordModel.Token);
+                //Uri uri = new Uri("rabbitmq://localhost/FunDooNotesEmailQueue");
+                //var endPoint = await bus.GetSendEndPoint(uri);
+                //await endPoint.Send(forgetPasswordModel);
+
+                return Ok(new ResponseModel<string> { Success = true, Message = "Mail Sent for resetting password!", Data = forgetPasswordModel.Token });
             }
-
-            return Ok(new ResponseModel<ForgetPasswordModel>
+            catch(Exception ex)
             {
-                Success = true,
-                Message = result.Message,
-                Data = result
-            });
+                return BadRequest(new ResponseModel<string> { Success=true,Message="Mail not sent"});
+            }
+            //var result = manager.ForgetPassword(email);
+
+            //if (result.Message == "Email not found!")
+            //{
+            //    return BadRequest(new ResponseModel<ForgetPasswordModel>
+            //    {
+            //        Success = false,
+            //        Message = result.Message
+            //    });
+            //}
+
+            //return Ok(new ResponseModel<ForgetPasswordModel>
+            //{
+            //    Success = true,
+            //    Message = result.Message,
+            //    Data = result
+            //});
         }
 
     }
