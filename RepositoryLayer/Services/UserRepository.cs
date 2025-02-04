@@ -46,6 +46,26 @@ namespace RepositoryLayer.Services
             return context.Users.FirstOrDefault(e => e.Email == login.Email && e.Password == encodedPassword);
         }
 
+        public ForgetPasswordModel ForgetPassword(string email)
+        {
+            var user = context.Users.FirstOrDefault(e => e.Email == email);
+
+            if (user == null)
+            {
+                return new ForgetPasswordModel
+                {
+                    Email = email,
+                    Message = "Email not found!"
+                };
+            }
+
+            return new ForgetPasswordModel
+            {
+                Email = email,
+                Message = "An email has been sent to reset your password !"
+            };
+        }
+
         public static string EncodePassword(string password)
         {
             try

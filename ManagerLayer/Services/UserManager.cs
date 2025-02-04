@@ -51,5 +51,10 @@ namespace ManagerLayer.Services
 
             return "Invalid Email or Password";
         }
+
+        public ForgetPasswordModel ForgetPassword(string email)
+        {
+            return user.ForgetPassword(email);
+        }
     }
 }

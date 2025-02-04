@@ -52,5 +52,29 @@ namespace FundooNotesApi.Controllers
 
             return BadRequest(new ResponseModel<string> { Success = false, Message = result });
         }
+
+        [HttpPost]
+        [Route("ForgetPassword")]
+        public IActionResult ForgetPassword(string email)
+        {
+            var result = manager.ForgetPassword(email);
+
+            if (result.Message == "Email not found!")
+            {
+                return BadRequest(new ResponseModel<ForgetPasswordModel>
+                {
+                    Success = false,
+                    Message = result.Message
+                });
+            }
+
+            return Ok(new ResponseModel<ForgetPasswordModel>
+            {
+                Success = true,
+                Message = result.Message,
+                Data = result
+            });
+        }
+
     }
 }
