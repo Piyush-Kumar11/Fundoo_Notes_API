@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CommonLayer.Models;
 using ManagerLayer.Interfaces;
+using MassTransit;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer.Entities;
@@ -13,10 +14,12 @@ namespace FundooNotesApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserManager manager;
+        private readonly IBus _bus;
 
-        public UsersController(IUserManager manager)
+        public UsersController(IUserManager manager, IBus bus)
         {
             this.manager = manager;
+            this._bus = bus;
         }
 
         [HttpPost]
@@ -62,38 +65,49 @@ namespace FundooNotesApi.Controllers
         {
             try
             {
+                // Validate email input
+                if (string.IsNullOrEmpty(email))
+                {
+                    return BadRequest(new ResponseModel<string>
+                    {Success = false, Message = "Email cannot be empty", Data = null });
+                }
+
+                // Fetch the token for password reset
                 ForgetPasswordModel forgetPasswordModel = manager.ForgetPassword(email);
+
+                if (forgetPasswordModel == null)
+                {
+                    return NotFound(new ResponseModel<string>
+                    {Success = false, Message = "Email not found", Data = null });
+                }
+
+                // Send email
                 Send send = new Send();
+                try
+                {
+                    send.SendMail(forgetPasswordModel.Email, forgetPasswordModel.Token);
+                }
+                catch (Exception emailEx)
+                {
+                    return BadRequest(new ResponseModel<string>
+                    {Success = false, Message = "Failed to send email", Data = emailEx.Message });
+                }
 
-                send.SendMail(forgetPasswordModel.Email,forgetPasswordModel.Token);
-                //Uri uri = new Uri("rabbitmq://localhost/FunDooNotesEmailQueue");
-                //var endPoint = await bus.GetSendEndPoint(uri);
-                //await endPoint.Send(forgetPasswordModel);
+                // Send message to RabbitMQ
+                Uri uri = new Uri("rabbitmq://localhost/FunDooNotesEmailQueue");
+                var endPoint = await _bus.GetSendEndpoint(uri);
+                await endPoint.Send(forgetPasswordModel);
 
-                return Ok(new ResponseModel<string> { Success = true, Message = "Mail Sent for resetting password!", Data = forgetPasswordModel.Token });
+                return Ok(new ResponseModel<string>
+                {Success = true, Message = "Mail sent for resetting password!", Data = forgetPasswordModel.Token });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(new ResponseModel<string> { Success=true,Message="Mail not sent"});
+                return BadRequest(new ResponseModel<string>
+                {Success = false, Message = "Mail not sent", Data = ex.Message});
             }
-            //var result = manager.ForgetPassword(email);
-
-            //if (result.Message == "Email not found!")
-            //{
-            //    return BadRequest(new ResponseModel<ForgetPasswordModel>
-            //    {
-            //        Success = false,
-            //        Message = result.Message
-            //    });
-            //}
-
-            //return Ok(new ResponseModel<ForgetPasswordModel>
-            //{
-            //    Success = true,
-            //    Message = result.Message,
-            //    Data = result
-            //});
         }
+
 
     }
 }

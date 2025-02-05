@@ -63,3 +63,13 @@ C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\obj\Debug\netcoreapp3.1\FundooNotesApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Automatonymous.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\GreenPipes.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\MassTransit.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\MassTransit.AspNetCoreIntegration.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\MassTransit.ExtensionsDependencyInjectionIntegration.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\MassTransit.RabbitMqTransport.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.Extensions.PlatformAbstractions.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\NewId.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\RabbitMQ.Client.dll

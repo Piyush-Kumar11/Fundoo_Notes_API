@@ -18,6 +18,7 @@ namespace RepositoryLayer.Services
         private readonly FundooDBContext context;
         private readonly IConfiguration configuration;
 
+
         // Constructor to inject the database context and configuration via dependency injection
         public UserRepository(FundooDBContext context, IConfiguration configuration)
         {
@@ -45,16 +46,18 @@ namespace RepositoryLayer.Services
 
         public ForgetPasswordModel ForgetPassword(string email)
         {
+            //UserEntity user = GetUserByEmail(email);
             var user = context.Users.FirstOrDefault(e => e.Email == email);
 
-            if (user == null)
+            if (user != null)
             {
-                ForgetPasswordModel forgetPasswordModel = new ForgetPasswordModel();
-                forgetPasswordModel.UserId = user.UserID;
-                forgetPasswordModel.Email = email;
-                forgetPasswordModel.Token = GenerateJWTToken(email, user.UserID);
-
-                return forgetPasswordModel;
+                // Create a password reset model
+                return new ForgetPasswordModel
+                {
+                    UserId = user.UserID,
+                    Email = user.Email,
+                    Token = GenerateJWTToken(user.Email, user.UserID) // Generate JWT Token
+                };
             }
             else
             {

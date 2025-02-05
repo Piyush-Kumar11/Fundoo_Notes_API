@@ -10,7 +10,7 @@ namespace CommonLayer.Models
     {
         public string SendMail(string ToEmail, string Token)
         {
-            string FromEmail = "---";
+            string FromEmail = "piyushkumar95459@gmail.com";
             MailMessage message = new MailMessage(FromEmail,ToEmail);
             string MailBody = "The Token for the reset password: " + Token;
             message.Subject = "Token generated for resetting password";
@@ -19,7 +19,7 @@ namespace CommonLayer.Models
             message.IsBodyHtml = true;
 
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com",587);
-            NetworkCredential credential = new NetworkCredential("---", "--pass--");
+            NetworkCredential credential = new NetworkCredential("piyushkumar95459@gmail.com", "neamrjpyxgodhsss");
             smtpClient.EnableSsl = true;
             smtpClient.UseDefaultCredentials = false;
             smtpClient.Credentials = credential;
