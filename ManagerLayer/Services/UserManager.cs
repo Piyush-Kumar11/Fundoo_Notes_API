@@ -55,5 +55,10 @@ namespace ManagerLayer.Services
         {
             return user.ForgetPassword(email);
         }
+
+        public bool ResetPassword(string email, ResetPasswordModel resetPassword)
+        {
+            return user.ResetPassword(email, resetPassword);
+        }
     }
 }

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CommonLayer.Models;
+using FundooNotesApi.Helpers;
 using ManagerLayer.Interfaces;
 using MassTransit;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RepositoryLayer.Entities;
 
 namespace FundooNotesApi.Controllers
@@ -26,22 +29,29 @@ namespace FundooNotesApi.Controllers
         [Route("Reg")]
         public IActionResult Register(RegisterModel model)
         {
-            var checkEmail = manager.MailExist(model.Email);
-            if(checkEmail)
+            try
             {
-                return BadRequest(new ResponseModel<UserEntity> { Success = false, Message = "Email Already Exist!" });
-            }
-            else
-            {
-                var result = manager.Registration(model);
-                if (result != null)
+                var checkEmail = manager.MailExist(model.Email);
+                if (checkEmail)
                 {
-                    return Ok(new ResponseModel<UserEntity> { Success = true, Message = "Register Successful", Data = result });
+                    return BadRequest(new ResponseModel<UserEntity> { Success = false, Message = "Email Already Exist!" });
                 }
                 else
                 {
-                    return BadRequest(new ResponseModel<UserEntity> { Success = false, Message = "Register Failed" });
+                    var result = manager.Registration(model);
+                    if (result != null)
+                    {
+                        return Ok(new ResponseModel<UserEntity> { Success = true, Message = "Register Successful", Data = result });
+                    }
+                    else
+                    {
+                        return BadRequest(new ResponseModel<UserEntity> { Success = false, Message = "Register Failed" });
+                    }
                 }
+            }
+            catch (AppException ex)
+            {
+                return NotFound(new { success = false, message = ex.Message });
             }
         }
 
@@ -108,6 +118,27 @@ namespace FundooNotesApi.Controllers
             }
         }
 
-
+        //[Authorize]
+        [HttpPost]
+        [Route("ResetPassword")]
+        public IActionResult ResetPassword(string email, ResetPasswordModel resetPasswordModel)
+        {
+            if(resetPasswordModel.Password == resetPasswordModel.ConfirmPassword)
+            {
+                if (manager.ResetPassword(email, resetPasswordModel))
+                {
+                    return Ok(new ResponseModel<bool> { Success = true, Message = "Password Reset Success", Data = true });
+                }
+                else
+                {
+                    return BadRequest(new ResponseModel<bool> { Success = false, Message = "Password Reset failed", Data = false });
+                }
+            }
+            else
+            {
+                return BadRequest(new ResponseModel<string> { Success = false, Message = "User reset password failed", Data = "Password Mismatch" });
+            }
+            
+        }
     }
 }

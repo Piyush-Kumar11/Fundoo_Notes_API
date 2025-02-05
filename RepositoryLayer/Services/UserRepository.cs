@@ -54,14 +54,27 @@ namespace RepositoryLayer.Services
                 // Create a password reset model
                 return new ForgetPasswordModel
                 {
-                    UserId = user.UserID,
-                    Email = user.Email,
-                    Token = GenerateJWTToken(user.Email, user.UserID) // Generate JWT Token
+                    UserId = user.UserID, Email = user.Email, Token = GenerateJWTToken(user.Email, user.UserID) // Generate JWT Token
                 };
             }
             else
             {
                 throw new Exception("User Not Exist for required email!");
+            }
+        }
+
+        public bool ResetPassword(string email, ResetPasswordModel resetPasswordModel)
+        {
+            UserEntity user = context.Users.FirstOrDefault(e => e.Email == email);
+            if (user != null)
+            {
+                user.Password = EncodePassword(resetPasswordModel.Password);
+                context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                throw new Exception("User Not Exist for this email!");
             }
         }
 
