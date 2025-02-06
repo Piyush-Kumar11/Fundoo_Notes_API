@@ -65,15 +65,23 @@ namespace RepositoryLayer.Services
 
         public bool ResetPassword(string email, ResetPasswordModel resetPasswordModel)
         {
+            // Retrieve the user from the database whose Email matches the given email.
             UserEntity user = context.Users.FirstOrDefault(e => e.Email == email);
+
+            // Check if a user with the specified email exists.
             if (user != null)
             {
+                // Encode the new password provided in the resetPasswordModel and update it in the database.
                 user.Password = EncodePassword(resetPasswordModel.Password);
+
+                // Save the changes to the database.
                 context.SaveChanges();
+
                 return true;
             }
             else
             {
+                // Throw an exception if no user exists for the given email.
                 throw new Exception("User Not Exist for this email!");
             }
         }
@@ -82,36 +90,48 @@ namespace RepositoryLayer.Services
         {
             try
             {
+                // Convert the input password string into a byte array using UTF-8 encoding.
                 byte[] encData_byte = new byte[password.Length];
                 encData_byte = System.Text.Encoding.UTF8.GetBytes(password);
+
+                // Convert the byte array into a Base64 encoded string.
                 string encodedData = Convert.ToBase64String(encData_byte);
+
                 return encodedData;
             }
             catch (Exception ex)
             {
-                throw new Exception("Error in base64Encode" + ex.Message);
+                // Throw a new exception with an error message and the original exception details if encoding fails.
+                throw new Exception("Error in base64Encode: " + ex.Message);
             }
         }
 
         private string GenerateJWTToken(string email, int userID)
         {
+            // Create a symmetric security key using the JWT key from configuration
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+
+            // Set signing credentials with the security key and the algorithm for signing (HmacSha256)
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            // Define claims (additional information to be included in the token)
             var claims = new[]
             {
-                new Claim("Email",email),
-                new Claim("UserID",userID.ToString())
+                new Claim("Email", email),  // Add email as a claim
+                new Claim("UserID", userID.ToString())  // Add user ID as a claim
             };
-            var token = new JwtSecurityToken(configuration["Jwt:Issuer"],
-                configuration["Jwt:Audience"],
-                claims,
-                expires: DateTime.Now.AddMinutes(15),
-                signingCredentials: credentials);
 
+            // Create the JWT token with expiration time (15 minutes) and signing credentials
+            var token = new JwtSecurityToken(configuration["Jwt:Issuer"],  // Issuer
+                configuration["Jwt:Audience"],  // Audience
+                claims,  // Claims
+                expires: DateTime.Now.AddMinutes(15),  // Token expiration time
+                signingCredentials: credentials);  // Signing credentials
 
+            // Return the generated token as a string
             return new JwtSecurityTokenHandler().WriteToken(token);
-
         }
+
 
         public string Login(LoginModel login)
         {
