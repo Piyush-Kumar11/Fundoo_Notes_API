@@ -1,86 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{1A3A2775-AE9A-491C-8848-B008F03AE489}|..\\RepositoryLayer\\RepositoryLayer.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\repositorylayer\\services\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1A3A2775-AE9A-491C-8848-B008F03AE489}|..\\RepositoryLayer\\RepositoryLayer.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\repositorylayer\\context\\fundoodbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\fundoonotesapi\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|solutionrelative:startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\fundoonotesapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UserRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\Services\\UserRepository.cs",
-              "RelativeDocumentMoniker": "..\\RepositoryLayer\\Services\\UserRepository.cs",
-              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\Services\\UserRepository.cs",
-              "RelativeToolTip": "..\\RepositoryLayer\\Services\\UserRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T07:12:15.164Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FundooDBContext.cs",
-              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\Context\\FundooDBContext.cs",
-              "RelativeDocumentMoniker": "..\\RepositoryLayer\\Context\\FundooDBContext.cs",
-              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\RepositoryLayer\\Context\\FundooDBContext.cs",
-              "RelativeToolTip": "..\\RepositoryLayer\\Context\\FundooDBContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T07:11:09.825Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Startup.cs",
-              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Startup.cs",
-              "RelativeDocumentMoniker": "Startup.cs",
-              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Startup.cs",
-              "RelativeToolTip": "Startup.cs",
-              "ViewState": "AgIAAIoAAAAAAAAAAAAkwKUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T07:03:12.569Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
-              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "Controllers\\UsersController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJ8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-06T06:57:24.491Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

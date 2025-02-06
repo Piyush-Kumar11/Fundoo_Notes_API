@@ -51,6 +51,8 @@ namespace FundooNotesApi
             // Registers IUserManager and UserManager for dependency injection with transient lifetime.
             services.AddTransient<IUserManager, UserManager>();
 
+            services.AddScoped<INotesRepository, NotesRepository>();
+            services.AddScoped<INotesManager, NotesManager>();
             /*
              * Configures Swagger for API documentation generation.
              * Defines API version and title for Swagger documentation.
