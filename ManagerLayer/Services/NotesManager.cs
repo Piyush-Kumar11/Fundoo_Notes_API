@@ -21,9 +21,40 @@ namespace ManagerLayer.Services
         {
             return notesRepository.CreateNote(notesModel, UserId);
         }
+
+        public bool DeleteNote(int noteId, int UserId)
+        {
+            return notesRepository.DeleteNote(noteId, UserId);
+        }
+
         public List<NotesEntity> FindAllNotes(int UserId)
         {
             return notesRepository.FindAllNotes(UserId);
+        }
+
+        public NotesEntity GetNoteByIds(int UserId, int notesId)
+        {
+            return notesRepository.GetNoteByIds(UserId, notesId);
+        }
+
+        public bool ToggleArchiveNote(int UserId, int noteId)
+        {
+            return notesRepository.ToggleArchiveNote(UserId, noteId);
+        }
+
+        public bool TogglePinNote(int UserId, int noteId)
+        {
+            return notesRepository.TogglePinNote(UserId, noteId);
+        }
+
+        public bool ToggleTrashNote(int UserId, int noteId)
+        {
+            return notesRepository.ToggleTrashNote(UserId, noteId);
+        }
+
+        public NotesEntity UpdateNote(int noteId, NotesModel notesModel, int UserId)
+        {
+            return notesRepository.UpdateNote(noteId, notesModel, UserId);
         }
     }
 }

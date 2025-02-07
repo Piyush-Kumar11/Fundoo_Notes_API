@@ -47,10 +47,9 @@ namespace FundooNotesApi
 
             // Registers IUserRepository and UserRepository for dependency injection with transient lifetime.
             services.AddTransient<IUserRepository, UserRepository>();
-
-            // Registers IUserManager and UserManager for dependency injection with transient lifetime.
             services.AddTransient<IUserManager, UserManager>();
 
+            // Registers INotesRepository and NotesRepository for dependency injection with Scoped lifetime.
             services.AddScoped<INotesRepository, NotesRepository>();
             services.AddScoped<INotesManager, NotesManager>();
             /*

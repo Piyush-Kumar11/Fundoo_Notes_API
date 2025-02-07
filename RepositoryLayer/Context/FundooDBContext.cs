@@ -16,6 +16,8 @@ namespace RepositoryLayer.Context
         // The Users property is mapped to the UserEntity class, which represents the structure of the table.
         public DbSet<UserEntity> Users { get; set; }
 
+        // DbSet representing the Notes table in the database.
+        // The Notes property is mapped to the NotesEntity class, which represents the structure of the table.
         public DbSet<NotesEntity> Notes { get; set; }
     }
 }
