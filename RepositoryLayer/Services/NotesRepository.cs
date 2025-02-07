@@ -135,5 +135,44 @@ namespace RepositoryLayer.Services
                 throw new Exception("Note not found with requested Id: " + noteId);
             }
         }
+
+        public bool UpdateNoteColor(int noteId, string color, int userId)
+        {
+            var note = dbContext.Notes.FirstOrDefault(n => n.NotesId == noteId && n.UserID == userId);
+            if (note != null)
+            {
+                note.Color = color;
+                note.LastUpdatedAt = DateTime.Now;
+                dbContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateNoteRemainder(int noteId, DateTime remainder, int userId)
+        {
+            var note = dbContext.Notes.FirstOrDefault(n => n.NotesId == noteId && n.UserID == userId);
+            if (note != null)
+            {
+                note.Remainder = remainder;
+                note.LastUpdatedAt = DateTime.Now;
+                dbContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
+        public bool UpdateNoteImage(int noteId, string imageUrl, int userId)
+        {
+            var note = dbContext.Notes.FirstOrDefault(n => n.NotesId == noteId && n.UserID == userId);
+            if (note != null)
+            {
+                note.Image = imageUrl;
+                note.LastUpdatedAt = DateTime.Now;
+                dbContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
     }
 }

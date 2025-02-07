@@ -56,5 +56,20 @@ namespace ManagerLayer.Services
         {
             return notesRepository.UpdateNote(noteId, notesModel, UserId);
         }
+
+        public bool UpdateNoteColor(int noteId, string color, int userId)
+        {
+            return notesRepository.UpdateNoteColor(noteId, color, userId);
+        }
+
+        public bool UpdateNoteRemainder(int noteId, DateTime remainder, int userId)
+        {
+            return notesRepository.UpdateNoteRemainder(noteId, remainder, userId);
+        }
+
+        public bool UpdateNoteImage(int noteId, string imageUrl, int userId)
+        {
+            return notesRepository.UpdateNoteImage(noteId, imageUrl, userId);
+        }
     }
 }

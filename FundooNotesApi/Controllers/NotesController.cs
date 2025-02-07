@@ -237,5 +237,68 @@ namespace FundooNotesApi.Controllers
                 return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
             }
         }
+
+        [Authorize]
+        [HttpPut]
+        [Route("UpdateColor")]
+        public IActionResult UpdateNoteColor(int noteId, string color)
+        {
+            try
+            {
+                int userId = Convert.ToInt32(User.FindFirst("UserID").Value);
+                bool isUpdated = notesManager.UpdateNoteColor(noteId, color, userId);
+
+                if (isUpdated)
+                    return Ok(new { Success = true, Message = "Note color updated successfully!" });
+
+                return NotFound(new { Success = false, Message = "Note not found or unauthorized access!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPut]
+        [Route("UpdateRemainder")]
+        public IActionResult UpdateNoteRemainder(int noteId, DateTime remainder)
+        {
+            try
+            {
+                int userId = Convert.ToInt32(User.FindFirst("UserID").Value);
+                bool isUpdated = notesManager.UpdateNoteRemainder(noteId, remainder, userId);
+
+                if (isUpdated)
+                    return Ok(new { Success = true, Message = "Note remainder updated successfully!" });
+
+                return NotFound(new { Success = false, Message = "Note not found or unauthorized access!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPut]
+        [Route("UpdateImage")]
+        public IActionResult UpdateNoteImage(int noteId, string imageUrl)
+        {
+            try
+            {
+                int userId = Convert.ToInt32(User.FindFirst("UserID").Value);
+                bool isUpdated = notesManager.UpdateNoteImage(noteId, imageUrl, userId);
+
+                if (isUpdated)
+                    return Ok(new { Success = true, Message = "Note image updated successfully!" });
+
+                return NotFound(new { Success = false, Message = "Note not found or unauthorized access!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
+            }
+        }
     }
 }
