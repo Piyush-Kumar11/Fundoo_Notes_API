@@ -52,6 +52,11 @@ namespace FundooNotesApi
             // Registers INotesRepository and NotesRepository for dependency injection with Scoped lifetime.
             services.AddScoped<INotesRepository, NotesRepository>();
             services.AddScoped<INotesManager, NotesManager>();
+
+            // Registers ILabelRepository and LabelRepository for dependency injection with Scoped lifetime.
+            services.AddScoped<ILabelRepository, LabelRepository>();
+            services.AddScoped<ILabelManager, LabelManager>();
+
             /*
              * Configures Swagger for API documentation generation.
              * Defines API version and title for Swagger documentation.

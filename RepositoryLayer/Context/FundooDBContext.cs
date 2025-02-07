@@ -19,5 +19,9 @@ namespace RepositoryLayer.Context
         // DbSet representing the Notes table in the database.
         // The Notes property is mapped to the NotesEntity class, which represents the structure of the table.
         public DbSet<NotesEntity> Notes { get; set; }
+
+        // DbSet representing the Labels table in the database.
+        // The Labels property is mapped to the LabelsEntity class, which represents the structure of the table.
+        public DbSet<LabelEntity> Labels { get; set; }
     }
 }
