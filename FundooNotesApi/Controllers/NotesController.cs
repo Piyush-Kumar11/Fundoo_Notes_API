@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CommonLayer.Models;
 using ManagerLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -151,7 +152,7 @@ namespace FundooNotesApi.Controllers
                 var userIdClaim = User.FindFirst("UserID");
                 if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
                 {
-                    return Unauthorized(new { Success = false, Message = "User not authorized" });
+                    return BadRequest(new { Success = false, Message = "User not authorized" });
                 }
 
                 int userId = Convert.ToInt32(userIdClaim.Value);
@@ -163,7 +164,7 @@ namespace FundooNotesApi.Controllers
                 }
                 else
                 {
-                    return NotFound(new { Success = false, Message = "Note not found!" });
+                    return BadRequest(new { Success = false, Message = "Note not found!" });
                 }
             }
             catch (Exception ex)
@@ -186,7 +187,7 @@ namespace FundooNotesApi.Controllers
                 {
                     return Ok(new { Success = true, Message = "Note pin status toggled successfully!" });
                 }
-                return NotFound(new { Success = false, Message = "Note not found!" });
+                return BadRequest(new { Success = false, Message = "Note not found!" });
             }
             catch (Exception ex)
             {
@@ -208,7 +209,7 @@ namespace FundooNotesApi.Controllers
                 {
                     return Ok(new { Success = true, Message = "Note archive status toggled successfully!" });
                 }
-                return NotFound(new { Success = false, Message = "Note not found!" });
+                return BadRequest(new { Success = false, Message = "Note not found!" });
             }
             catch (Exception ex)
             {
@@ -230,7 +231,7 @@ namespace FundooNotesApi.Controllers
                 {
                     return Ok(new { Success = true, Message = "Note trash status toggled successfully!" });
                 }
-                return NotFound(new { Success = false, Message = "Note not found!" });
+                return BadRequest(new { Success = false, Message = "Note not found!" });
             }
             catch (Exception ex)
             {
@@ -251,7 +252,7 @@ namespace FundooNotesApi.Controllers
                 if (isUpdated)
                     return Ok(new { Success = true, Message = "Note color updated successfully!" });
 
-                return NotFound(new { Success = false, Message = "Note not found or unauthorized access!" });
+                return BadRequest(new { Success = false, Message = "Note not found or unauthorized access!" });
             }
             catch (Exception ex)
             {
@@ -272,7 +273,7 @@ namespace FundooNotesApi.Controllers
                 if (isUpdated)
                     return Ok(new { Success = true, Message = "Note remainder updated successfully!" });
 
-                return NotFound(new { Success = false, Message = "Note not found or unauthorized access!" });
+                return BadRequest(new { Success = false, Message = "Note not found or unauthorized access!" });
             }
             catch (Exception ex)
             {
@@ -293,12 +294,37 @@ namespace FundooNotesApi.Controllers
                 if (isUpdated)
                     return Ok(new { Success = true, Message = "Note image updated successfully!" });
 
-                return NotFound(new { Success = false, Message = "Note not found or unauthorized access!" });
+                return BadRequest(new { Success = false, Message = "Note not found or unauthorized access!" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
             }
+        }
+
+        //---------------------------------------------------API Review Task--------------------------------------------------------------------------
+
+        [Authorize]
+        [HttpGet("FetchNotesByTitle&Desc")]
+        public IActionResult FetchNotes(string title, string description)
+        {
+            var userId = Convert.ToInt32(User.FindFirst("UserID").Value);
+            var notes = dbContext.Notes.Where(n => n.UserID == userId && (n.Title.Contains(title) || n.Description.Contains(description))).ToList();
+
+            if (notes.Count == 0)
+                return BadRequest(new { Success = false, Message = "No matching notes found!" });
+
+            return Ok(new { Success = true, Message = "Notes fetched successfully!", Data = notes });
+        }
+
+        [Authorize]
+        [HttpGet("GetUserNoteCount")]
+        public IActionResult GetUserNoteCount()
+        {
+            var userId = Convert.ToInt32(User.FindFirst("UserID").Value);
+            int count = dbContext.Notes.Count(n => n.UserID == userId);
+
+            return Ok(new { Success = true, Message = "User note count retrieved!", Data = count });
         }
     }
 }

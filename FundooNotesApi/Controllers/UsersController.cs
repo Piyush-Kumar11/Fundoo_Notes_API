@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CommonLayer.Models;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RepositoryLayer.Context;
 using RepositoryLayer.Entities;
 
 namespace FundooNotesApi.Controllers
@@ -19,12 +21,14 @@ namespace FundooNotesApi.Controllers
     {
         private readonly IUserManager manager;
         private readonly IBus _bus;
+        private readonly FundooDBContext dbContext;
 
         // Constructor to initialize the dependencies for user manager and RabbitMQ bus
-        public UsersController(IUserManager manager, IBus bus)
+        public UsersController(IUserManager manager, IBus bus, FundooDBContext dbContext)
         {
             this.manager = manager;
             this._bus = bus;
+            this.dbContext = dbContext;
         }
 
         // Endpoint for user registration
@@ -155,6 +159,80 @@ namespace FundooNotesApi.Controllers
                 // Handle any unexpected errors during the password reset process
                 return StatusCode(500, new ResponseModel<string> { Success = false, Message = "An error occurred while resetting the password", Data = ex.Message });
             }
+        }
+
+        //---------------------------------------------------API Review Task--------------------------------------------------------------------------
+
+        [HttpGet("GetAllUsers")]
+        public IActionResult GetAllUsers()
+        {
+            var users = dbContext.Users.ToList();
+            return Ok(new { Success = true, Message = "Users fetched successfully!", Data = users });
+        }
+
+        [HttpGet("GetUserById")]
+        public IActionResult GetUserById(int userId)
+        {
+            var user = dbContext.Users.FirstOrDefault(u => u.UserID == userId);
+            if (user != null)
+            {
+                return Ok(new { Success = true, Message = "User found!", Data = user });
+            }
+
+            return BadRequest(new { Success = false, Message = "User not found!" });
+        }
+
+        [HttpGet("GetUsersStartingWithA")]
+        public IActionResult GetUsersStartingWithA()
+        {
+            var users = dbContext.Users.Where(u => u.FirstName.StartsWith("A")).ToList();
+            return Ok(new { Success = true, Message = "Users fetched successfully!", Data = users });
+        }
+
+        [HttpGet("GetTotalUserCount")]
+        public IActionResult GetTotalUserCount()
+        {
+            int count = dbContext.Users.Count();
+            return Ok(new { Success = true, Message = "User count retrieved successfully!", Data = count });
+        }
+
+        [HttpGet("GetUsersOrderedByNameAsc")]
+        public IActionResult GetUsersOrderedByNameAsc()
+        {
+            var users = dbContext.Users.OrderBy(u => u.FirstName).ToList();
+            return Ok(new { Success = true, Message = "Users ordered by name ascending!", Data = users });
+        }
+
+        [HttpGet("GetUsersOrderedByNameDesc")]
+        public IActionResult GetUsersOrderedByNameDesc()
+        {
+            var users = dbContext.Users.OrderByDescending(u => u.FirstName).ToList();
+            return Ok(new { Success = true, Message = "Users ordered by name descending!", Data = users });
+        }
+
+        [HttpGet("GetAverageUserAge")]
+        public IActionResult GetAverageUserAge()
+        {
+            var users = dbContext.Users.ToList();
+            if (users.Count == 0)
+                return BadRequest(new { Success = false, Message = "No users found!" });
+
+            double averageAge = users.Average(u => DateTime.Today.Year - u.DOB.Year);
+
+            return Ok(new { Success = true, Message = "Average user age calculated!", Data = averageAge });
+        }
+
+        [HttpGet("GetOldestAndYoungestUser")]
+        public IActionResult GetOldestAndYoungestUser()
+        {
+            var users = dbContext.Users.ToList();
+            if (users.Count == 0)
+                return BadRequest(new { Success = false, Message = "No users found!" });
+
+            int oldestAge = users.Max(u => DateTime.Today.Year - u.DOB.Year);
+            int youngestAge = users.Min(u => DateTime.Today.Year - u.DOB.Year);
+
+            return Ok(new{Success = true, Message = "Oldest and youngest user age retrieved!", Data = new { Oldest = oldestAge, Youngest = youngestAge } });
         }
     }
 
