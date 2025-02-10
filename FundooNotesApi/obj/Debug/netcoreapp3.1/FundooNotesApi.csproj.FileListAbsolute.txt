@@ -1,3 +1,4 @@
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\NLog.config
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\FundooNotesApi.exe
@@ -32,6 +33,9 @@ C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\NewId.dll
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\NLog.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\NLog.Extensions.Logging.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\NLog.Web.AspNetCore.dll
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\RabbitMQ.Client.dll
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
@@ -73,7 +77,3 @@ C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\obj\Debug\netcoreapp3.
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\obj\Debug\netcoreapp3.1\FundooNotesApi.dll
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\obj\Debug\netcoreapp3.1\FundooNotesApi.pdb
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\obj\Debug\netcoreapp3.1\FundooNotesApi.genruntimeconfig.cache
-C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\NLog.dll
-C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\NLog.Extensions.Logging.dll
-C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\NLog.Web.AspNetCore.dll
-C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\NLog.config
