@@ -6,8 +6,10 @@ using ManagerLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entities;
+using RepositoryLayer.Migrations;
 
 namespace FundooNotesApi.Controllers
 {
@@ -17,11 +19,13 @@ namespace FundooNotesApi.Controllers
     {
         private readonly INotesManager notesManager;
         private readonly FundooDBContext dbContext;
+        private readonly ILogger<NotesController> _logger;
 
-        public NotesController(INotesManager notesManager, FundooDBContext dbContext)
+        public NotesController(INotesManager notesManager, FundooDBContext dbContext,ILogger<NotesController> logger)
         {
             this.notesManager = notesManager;
             this.dbContext = dbContext;
+            _logger = logger;
         }
 
         [Authorize]
@@ -32,22 +36,28 @@ namespace FundooNotesApi.Controllers
             try
             {
                 int UserId = int.Parse(User.FindFirst("UserID").Value);
+                _logger.LogInformation("Creating note for UserID: {UserId}", UserId);
+
                 NotesEntity notesEntity = notesManager.CreateNote(notesModel, UserId);
 
                 if (notesEntity != null)
                 {
-                    return Ok(new ResponseModel<NotesEntity> { Success = true, Message="Note Added Success!", Data=notesEntity});
+                    _logger.LogInformation("Note created successfully for UserID: {UserId}, NoteID: {NoteId}", UserId, notesEntity.NotesId);
+                    return Ok(new ResponseModel<NotesEntity> { Success = true, Message = "Note Added Success!", Data = notesEntity });
                 }
                 else
                 {
-                    return BadRequest(new ResponseModel<NotesEntity> { Success = false, Message = "Note didn't Added!", Data = null });
+                    _logger.LogWarning("Failed to create note for UserID: {UserId}", UserId);
+                    return BadRequest(new ResponseModel<NotesEntity> { Success = false, Message = "Note didn't Add!", Data = null });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw ex;
+                _logger.LogError(ex, "Error occurred while creating note");
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
             }
         }
+
 
         [Authorize]
         [HttpPut]
@@ -59,26 +69,33 @@ namespace FundooNotesApi.Controllers
                 var userIdClaim = User.FindFirst("UserID");
                 if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
                 {
-                    return BadRequest(new { Success = false, Message = "User not authorized" });
+                    _logger.LogWarning("Unauthorized access attempt in UpdateNote.");
+                    return Unauthorized(new { Success = false, Message = "User not authorized" });
                 }
 
                 int userId = Convert.ToInt32(userIdClaim.Value);
+                _logger.LogInformation("Updating NoteID: {NoteId} for UserID: {UserId}", noteId, userId);
+
                 NotesEntity note = notesManager.UpdateNote(noteId, updatedNote, userId);
 
                 if (note != null)
                 {
+                    _logger.LogInformation("Note updated successfully. NoteID: {NoteId}, UserID: {UserId}", noteId, userId);
                     return Ok(new { Success = true, Message = "Note updated successfully!", Data = note });
                 }
                 else
                 {
+                    _logger.LogWarning("Failed to update note. NoteID: {NoteId}, UserID: {UserId}", noteId, userId);
                     return BadRequest(new { Success = false, Message = "Note not found or not authorized!" });
                 }
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error updating note. NoteID: {NoteId}", noteId);
                 return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
             }
         }
+
 
         [Authorize]
         [HttpDelete]
@@ -90,26 +107,33 @@ namespace FundooNotesApi.Controllers
                 var userIdClaim = User.FindFirst("UserID");
                 if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
                 {
-                    return BadRequest(new { Success = false, Message = "User not authorized" });
+                    _logger.LogWarning("Unauthorized access attempt in DeleteNote.");
+                    return Unauthorized(new { Success = false, Message = "User not authorized" });
                 }
 
                 int userId = Convert.ToInt32(userIdClaim.Value);
+                _logger.LogInformation("Deleting NoteID: {NoteId} for UserID: {UserId}", noteId, userId);
+
                 bool isDeleted = notesManager.DeleteNote(noteId, userId);
 
                 if (isDeleted)
                 {
+                    _logger.LogInformation("Note deleted successfully. NoteID: {NoteId}, UserID: {UserId}", noteId, userId);
                     return Ok(new { Success = true, Message = "Note deleted successfully!" });
                 }
                 else
                 {
+                    _logger.LogWarning("Failed to delete note. NoteID: {NoteId}, UserID: {UserId}", noteId, userId);
                     return BadRequest(new { Success = false, Message = "Note not found or not authorized!" });
                 }
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error deleting note. NoteID: {NoteId}", noteId);
                 return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
             }
         }
+
 
         [Authorize]
         [HttpGet]
@@ -118,29 +142,38 @@ namespace FundooNotesApi.Controllers
         {
             try
             {
+                _logger.LogInformation("FindAllNotes API called.");
+
                 var userIdClaim = User.FindFirst("UserID");
                 if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
                 {
+                    _logger.LogWarning("Unauthorized access attempt in FindAllNotes.");
                     return Unauthorized(new { Success = false, Message = "User not authorized" });
                 }
 
                 int userId = Convert.ToInt32(userIdClaim.Value);
+                _logger.LogInformation($"Fetching all notes for UserID: {userId}");
+
                 List<NotesEntity> notes = notesManager.FindAllNotes(userId);
 
                 if (notes.Count > 0)
                 {
+                    _logger.LogInformation($"Successfully fetched {notes.Count} notes for UserID: {userId}");
                     return Ok(new { Success = true, Message = "Notes fetched successfully!", Data = notes });
                 }
                 else
                 {
-                    return BadRequest(new { Success = false, Message = "No notes found for the user!" });
+                    _logger.LogWarning($"No notes found for UserID: {userId}");
+                    return NotFound(new { Success = false, Message = "No notes found for the user!" });
                 }
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Error in FindAllNotes API: {ex}");
                 return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
             }
         }
+
 
         [Authorize]
         [HttpGet]
@@ -308,13 +341,25 @@ namespace FundooNotesApi.Controllers
         [HttpGet("FetchNotesByTitle&Desc")]
         public IActionResult FetchNotes(string title, string description)
         {
-            var userId = Convert.ToInt32(User.FindFirst("UserID").Value);
-            var notes = dbContext.Notes.Where(n => n.UserID == userId && (n.Title.Contains(title) || n.Description.Contains(description))).ToList();
+            try
+            {
+                var userId = Convert.ToInt32(User.FindFirst("UserID").Value);
+                var notes = dbContext.Notes
+                    .Where(n => n.UserID == userId &&
+                                (n.Title.Contains(title) || n.Description.Contains(description)))
+                    .ToList();
 
-            if (notes.Count == 0)
-                return BadRequest(new { Success = false, Message = "No matching notes found!" });
+                if (notes.Count == 0)
+                {
+                    return NotFound(new { Success = false, Message = "No matching notes found!" });
+                }
 
-            return Ok(new { Success = true, Message = "Notes fetched successfully!", Data = notes });
+                return Ok(new { Success = true, Message = "Notes fetched successfully!", Data = notes });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
+            }
         }
 
         [Authorize]

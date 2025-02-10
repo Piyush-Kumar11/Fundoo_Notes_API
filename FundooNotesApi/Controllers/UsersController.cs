@@ -22,13 +22,16 @@ namespace FundooNotesApi.Controllers
         private readonly IUserManager manager;
         private readonly IBus _bus;
         private readonly FundooDBContext dbContext;
+        private readonly ILogger<UsersController> _logger;
+
 
         // Constructor to initialize the dependencies for user manager and RabbitMQ bus
-        public UsersController(IUserManager manager, IBus bus, FundooDBContext dbContext)
+        public UsersController(IUserManager manager, IBus bus, FundooDBContext dbContext, ILogger<UsersController> logger)
         {
             this.manager = manager;
             this._bus = bus;
             this.dbContext = dbContext;
+            this._logger = logger;
         }
 
         // Endpoint for user registration
@@ -38,30 +41,31 @@ namespace FundooNotesApi.Controllers
         {
             try
             {
-                // Check if the email already exists
+                _logger.LogInformation("User registration initiated for Email: {Email}", model.Email);
+
                 var checkEmail = manager.MailExist(model.Email);
                 if (checkEmail)
                 {
+                    _logger.LogWarning("Registration failed: Email already exists - {Email}", model.Email);
                     return BadRequest(new ResponseModel<UserEntity> { Success = false, Message = "Email Already Exist!" });
+                }
+
+                var result = manager.Registration(model);
+                if (result != null)
+                {
+                    _logger.LogInformation("User registered successfully: {Email}", model.Email);
+                    return Ok(new ResponseModel<UserEntity> { Success = true, Message = "Register Successful", Data = result });
                 }
                 else
                 {
-                    // Perform the registration process
-                    var result = manager.Registration(model);
-                    if (result != null)
-                    {
-                        return Ok(new ResponseModel<UserEntity> { Success = true, Message = "Register Successful", Data = result });
-                    }
-                    else
-                    {
-                        return BadRequest(new ResponseModel<UserEntity> { Success = false, Message = "Register Failed" });
-                    }
+                    _logger.LogWarning("Registration failed for Email: {Email}", model.Email);
+                    return BadRequest(new ResponseModel<UserEntity> { Success = false, Message = "Register Failed" });
                 }
             }
-            catch (AppException ex)
+            catch (Exception ex)
             {
-                // Handle custom application-specific exceptions
-                return NotFound(new { success = false, message = ex.Message });
+                _logger.LogError(ex, "Exception occurred during registration for Email: {Email}", model.Email);
+                return StatusCode(500, new { success = false, message = "Internal Server Error", error = ex.Message });
             }
         }
 
@@ -70,14 +74,17 @@ namespace FundooNotesApi.Controllers
         [Route("Login")]
         public IActionResult Login(LoginModel login)
         {
-            // Authenticate the user and fetch the result
+            _logger.LogInformation("Login attempt for Email: {Email}", login.Email);
+
             var result = manager.Login(login);
 
             if (result != "Invalid Email or Password")
             {
+                _logger.LogInformation("User logged in successfully: {Email}", login.Email);
                 return Ok(new ResponseModel<string> { Success = true, Message = "Login Successful", Data = result });
             }
 
+            _logger.LogWarning("Failed login attempt for Email: {Email}", login.Email);
             return BadRequest(new ResponseModel<string> { Success = false, Message = result });
         }
 
@@ -87,42 +94,42 @@ namespace FundooNotesApi.Controllers
         {
             try
             {
-                // Validate the provided email
                 if (string.IsNullOrEmpty(email))
                 {
+                    _logger.LogWarning("Forget Password failed: Email cannot be empty.");
                     return BadRequest(new ResponseModel<string> { Success = false, Message = "Email cannot be empty", Data = null });
                 }
 
-                // Generate a token for password reset
+                _logger.LogInformation("Forget password request received for Email: {Email}", email);
                 ForgetPasswordModel forgetPasswordModel = manager.ForgetPassword(email);
 
                 if (forgetPasswordModel == null)
                 {
+                    _logger.LogWarning("Forget password failed: Email not found - {Email}", email);
                     return NotFound(new ResponseModel<string> { Success = false, Message = "Email not found", Data = null });
                 }
 
-                // Attempt to send a password reset email
-                Send send = new Send();
                 try
                 {
+                    Send send = new Send();
                     send.SendMail(forgetPasswordModel.Email, forgetPasswordModel.Token);
                 }
                 catch (Exception emailEx)
                 {
-                    // Handle email-sending failures
+                    _logger.LogError(emailEx, "Failed to send email for forget password: {Email}", email);
                     return BadRequest(new ResponseModel<string> { Success = false, Message = "Failed to send email", Data = emailEx.Message });
                 }
 
-                // Send a message to RabbitMQ
                 Uri uri = new Uri("rabbitmq://localhost/FunDooNotesEmailQueue");
                 var endPoint = await _bus.GetSendEndpoint(uri);
                 await endPoint.Send(forgetPasswordModel);
 
+                _logger.LogInformation("Forget password email sent successfully: {Email}", email);
                 return Ok(new ResponseModel<string> { Success = true, Message = "Mail sent for resetting password!", Data = forgetPasswordModel.Token });
             }
             catch (Exception ex)
             {
-                // Handle general exceptions
+                _logger.LogError(ex, "Error occurred in ForgetPassword API for Email: {Email}", email);
                 return BadRequest(new ResponseModel<string> { Success = false, Message = "Mail not sent", Data = ex.Message });
             }
         }
@@ -135,31 +142,35 @@ namespace FundooNotesApi.Controllers
         {
             try
             {
-                // Check if password and confirm password match
+                string email = User.FindFirstValue("Email");
+                _logger.LogInformation("Reset password request for Email: {Email}", email);
+
                 if (resetPasswordModel.Password == resetPasswordModel.ConfirmPassword)
                 {
-                    // Retrieve the user's email from claims
-                    string email = User.FindFirstValue("Email");
                     if (manager.ResetPassword(email, resetPasswordModel))
                     {
+                        _logger.LogInformation("Password reset successfully for Email: {Email}", email);
                         return Ok(new ResponseModel<bool> { Success = true, Message = "Password Reset Success", Data = true });
                     }
                     else
                     {
+                        _logger.LogWarning("Password reset failed for Email: {Email}", email);
                         return BadRequest(new ResponseModel<bool> { Success = false, Message = "Password Reset failed", Data = false });
                     }
                 }
                 else
                 {
+                    _logger.LogWarning("Password mismatch during reset for Email: {Email}", email);
                     return BadRequest(new ResponseModel<string> { Success = false, Message = "User reset password failed", Data = "Password Mismatch" });
                 }
             }
             catch (Exception ex)
             {
-                // Handle any unexpected errors during the password reset process
+                _logger.LogError(ex, "Error occurred while resetting password for Email: {Email}", User.FindFirstValue("Email"));
                 return StatusCode(500, new ResponseModel<string> { Success = false, Message = "An error occurred while resetting the password", Data = ex.Message });
             }
         }
+
 
         //---------------------------------------------------API Review Task--------------------------------------------------------------------------
 

@@ -1,0 +1,69 @@
+2025-02-10 13:37:39.9007 | Info | Application is starting... 
+2025-02-10 13:37:45.3601 | Info | User profile is available. Using 'C:\Users\Piyush\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+2025-02-10 13:37:47.0693 | Info | Application started. Press Ctrl+C to shut down. 
+2025-02-10 13:37:47.0693 | Info | Hosting environment: Development 
+2025-02-10 13:37:47.0693 | Info | Content root path: C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi 
+2025-02-10 13:37:47.2657 | Info | Request starting HTTP/2.0 GET https://localhost:44392/swagger/index.html   
+2025-02-10 13:37:47.2657 | Info | Request starting HTTP/2.0 GET https://localhost:44392/_framework/aspnetcore-browser-refresh.js   
+2025-02-10 13:37:47.3686 | Error | Connection ID "18230571292401074179", Request ID "40000004-0000-fd00-b63f-84710c7967bb": An unhandled exception was thrown by the application. System.OperationCanceledException: The operation was canceled.
+   at System.Threading.CancellationToken.ThrowOperationCanceledException()
+   at System.Threading.CancellationToken.ThrowIfCancellationRequested()
+   at Microsoft.AspNetCore.Server.IIS.Core.HttpResponseStream.ValidateState(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.IIS.Core.HttpResponseStream.WriteAsync(ReadOnlyMemory`1 source, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.IIS.Core.WrappingStream.WriteAsync(ReadOnlyMemory`1 source, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Watch.BrowserRefresh.BrowserScriptMiddleware.InvokeAsync(HttpContext context)
+   at Microsoft.AspNetCore.Builder.Extensions.MapMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.Extensions.MapMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.Extensions.MapMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Builder.Extensions.MapWhenMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Server.IIS.Core.IISHttpContextOfT`1.ProcessRequestAsync()
+2025-02-10 13:37:47.6786 | Info | Request finished in 416.0752ms 0 application/javascript; charset=utf-8 
+2025-02-10 13:37:48.4475 | Info | Request finished in 1190.7791ms 200 text/html;charset=utf-8 
+2025-02-10 13:37:48.4740 | Info | Request starting HTTP/2.0 GET https://localhost:44392/_framework/aspnetcore-browser-refresh.js   
+2025-02-10 13:37:48.4740 | Info | Request starting HTTP/2.0 GET https://localhost:44392/_vs/browserLink   
+2025-02-10 13:37:48.4905 | Info | Request finished in 16.5129ms 200 application/javascript; charset=utf-8 
+2025-02-10 13:37:48.6423 | Info | Request finished in 160.6642ms 200 text/javascript; charset=UTF-8 
+2025-02-10 13:37:48.9305 | Info | Request starting HTTP/2.0 GET https://localhost:44392/swagger/v1/swagger.json   
+2025-02-10 13:37:49.2259 | Info | Request finished in 295.5519ms 200 application/json;charset=utf-8 
+2025-02-10 13:38:17.0448 | Info | Request starting HTTP/2.0 POST https://localhost:44392/api/Users/Login application/json 62 
+2025-02-10 13:38:17.0828 | Info | Executing endpoint 'FundooNotesApi.Controllers.UsersController.Login (FundooNotesApi)' 
+2025-02-10 13:38:17.2158 | Info | Route matched with {action = "Login", controller = "Users"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Login(CommonLayer.Models.LoginModel) on controller FundooNotesApi.Controllers.UsersController (FundooNotesApi). 
+2025-02-10 13:38:19.8404 | Info | Entity Framework Core 3.1.0 initialized 'FundooDBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None 
+2025-02-10 13:38:22.3615 | Info | Executed DbCommand (217ms) [Parameters=[@__login_Email_0='?' (Size = 4000), @__encodedPassword_1='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[UserID], [u].[DOB], [u].[Email], [u].[FirstName], [u].[Gender], [u].[LastName], [u].[Password]
+FROM [Users] AS [u]
+WHERE ([u].[Email] = @__login_Email_0) AND ([u].[Password] = @__encodedPassword_1) 
+2025-02-10 13:38:23.3763 | Info | Executing ObjectResult, writing value of type 'CommonLayer.Models.ResponseModel`1[[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'. 
+2025-02-10 13:38:23.4164 | Info | Executed action FundooNotesApi.Controllers.UsersController.Login (FundooNotesApi) in 6180.7605ms 
+2025-02-10 13:38:23.4164 | Info | Executed endpoint 'FundooNotesApi.Controllers.UsersController.Login (FundooNotesApi)' 
+2025-02-10 13:38:23.4343 | Info | Request finished in 6391.0048ms 200 application/json; charset=utf-8 
+2025-02-10 13:38:52.3183 | Info | Request starting HTTP/2.0 GET https://localhost:44392/api/Notes/FindAllNotes   
+2025-02-10 13:38:52.6133 | Info | Successfully validated the token. 
+2025-02-10 13:38:52.6676 | Info | Authorization was successful. 
+2025-02-10 13:38:52.6676 | Info | Executing endpoint 'FundooNotesApi.Controllers.NotesController.FindAllNotes (FundooNotesApi)' 
+2025-02-10 13:38:52.6676 | Info | Route matched with {action = "FindAllNotes", controller = "Notes"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult FindAllNotes() on controller FundooNotesApi.Controllers.NotesController (FundooNotesApi). 
+2025-02-10 13:38:52.8721 | Info | Entity Framework Core 3.1.0 initialized 'FundooDBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None 
+2025-02-10 13:38:52.9386 | Info | Executed DbCommand (29ms) [Parameters=[@__UserId_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT [n].[NotesId], [n].[Color], [n].[CreatedAt], [n].[Description], [n].[Image], [n].[IsArchive], [n].[IsPin], [n].[IsTrash], [n].[LastUpdatedAt], [n].[Remainder], [n].[Title], [n].[UserID]
+FROM [Notes] AS [n]
+WHERE [n].[UserID] = @__UserId_0 
+2025-02-10 13:38:53.0099 | Info | Executing ObjectResult, writing value of type '<>f__AnonymousType1`3[[System.Boolean, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[RepositoryLayer.Entities.NotesEntity, RepositoryLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'. 
+2025-02-10 13:38:53.0472 | Info | Executed action FundooNotesApi.Controllers.NotesController.FindAllNotes (FundooNotesApi) in 366.3811ms 
+2025-02-10 13:38:53.0472 | Info | Executed endpoint 'FundooNotesApi.Controllers.NotesController.FindAllNotes (FundooNotesApi)' 
+2025-02-10 13:38:53.0548 | Info | Request finished in 736.8755ms 200 application/json; charset=utf-8 
+2025-02-10 13:39:28.6741 | Info | Request starting HTTP/2.0 GET https://localhost:44392/api/Notes/FetchNotesByTitle&Desc?title=Science&description=This%20is%20a%20Science%20Project%20Note%21   
+2025-02-10 13:39:28.6877 | Info | Successfully validated the token. 
+2025-02-10 13:39:28.7153 | Info | Authorization was successful. 
+2025-02-10 13:39:28.7365 | Info | Executing endpoint 'FundooNotesApi.Controllers.NotesController.FetchNotes (FundooNotesApi)' 
+2025-02-10 13:39:28.7785 | Info | Route matched with {action = "FetchNotes", controller = "Notes"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult FetchNotes(System.String, System.String) on controller FundooNotesApi.Controllers.NotesController (FundooNotesApi). 
+2025-02-10 13:39:28.8088 | Info | Fetching notes with title: Science and description: This is a Science Project Note! 
+2025-02-10 13:39:28.8394 | Info | Entity Framework Core 3.1.0 initialized 'FundooDBContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None 
+2025-02-10 13:39:28.9781 | Info | Executed DbCommand (24ms) [Parameters=[@__userId_0='?' (DbType = Int32), @__8__locals1_title_1='?' (Size = 4000), @__8__locals1_description_2='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT [n].[NotesId], [n].[Color], [n].[CreatedAt], [n].[Description], [n].[Image], [n].[IsArchive], [n].[IsPin], [n].[IsTrash], [n].[LastUpdatedAt], [n].[Remainder], [n].[Title], [n].[UserID]
+FROM [Notes] AS [n]
+WHERE ([n].[UserID] = @__userId_0) AND (((@__8__locals1_title_1 = N'') OR (CHARINDEX(@__8__locals1_title_1, [n].[Title]) > 0)) OR ((@__8__locals1_description_2 = N'') OR (CHARINDEX(@__8__locals1_description_2, [n].[Description]) > 0))) 
+2025-02-10 13:39:28.9781 | Info | Successfully fetched 1 notes. 
+2025-02-10 13:39:28.9781 | Info | Executing ObjectResult, writing value of type '<>f__AnonymousType1`3[[System.Boolean, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Collections.Generic.List`1[[RepositoryLayer.Entities.NotesEntity, RepositoryLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'. 
+2025-02-10 13:39:28.9957 | Info | Executed action FundooNotesApi.Controllers.NotesController.FetchNotes (FundooNotesApi) in 214.9839ms 
+2025-02-10 13:39:29.0056 | Info | Executed endpoint 'FundooNotesApi.Controllers.NotesController.FetchNotes (FundooNotesApi)' 
+2025-02-10 13:39:29.0056 | Info | Request finished in 333.5535ms 200 application/json; charset=utf-8 
