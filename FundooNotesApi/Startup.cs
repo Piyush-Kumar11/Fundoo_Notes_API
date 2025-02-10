@@ -57,6 +57,10 @@ namespace FundooNotesApi
             services.AddScoped<ILabelRepository, LabelRepository>();
             services.AddScoped<ILabelManager, LabelManager>();
 
+            // Register Collaborator Dependencies
+            services.AddScoped<ICollaboratorRepository, CollaboratorRepository>();
+            services.AddScoped<ICollaboratorManager, CollaboratorManager>();
+
             /*
              * Configures Swagger for API documentation generation.
              * Defines API version and title for Swagger documentation.

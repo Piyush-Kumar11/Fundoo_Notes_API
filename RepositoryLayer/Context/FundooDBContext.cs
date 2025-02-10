@@ -23,5 +23,9 @@ namespace RepositoryLayer.Context
         // DbSet representing the Labels table in the database.
         // The Labels property is mapped to the LabelsEntity class, which represents the structure of the table.
         public DbSet<LabelEntity> Labels { get; set; }
+
+        // DbSet representing the Collaborator table in the database.
+        // The Collaborator property is mapped to the CollaboratorEntity class, which represents the structure of the table.
+        public DbSet<CollaboratorEntity> Collaborators { get; set; }
     }
 }
