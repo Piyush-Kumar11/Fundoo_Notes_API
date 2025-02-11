@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommonLayer.Models;
+using GreenPipes.Caching;
 using ManagerLayer.Interfaces;
 using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entities;
 using RepositoryLayer.Migrations;
@@ -22,13 +25,15 @@ namespace FundooNotesApi.Controllers
         private readonly FundooDBContext dbContext;
         private readonly IBus _bus;
         private readonly ILogger<CollaboratorController> _logger;
+        private readonly IDistributedCache _cache;
 
-        public CollaboratorController(ICollaboratorManager collaboratorManager, FundooDBContext dbContext, IBus _bus, ILogger<CollaboratorController> _logger)
+        public CollaboratorController(ICollaboratorManager collaboratorManager, FundooDBContext dbContext, IBus _bus, ILogger<CollaboratorController> _logger, IDistributedCache _cache)
         {
             this.collaboratorManager = collaboratorManager;
             this.dbContext = dbContext;
             this._bus = _bus;
             this._logger = _logger;
+            this._cache = _cache;
         }
 
         [Authorize]
@@ -115,6 +120,44 @@ namespace FundooNotesApi.Controllers
                 }
 
                 return Ok(new { Success = true, Message = "Collaborators retrieved successfully!", Data = collaborators });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpGet("GetCollaboratorsWithRedis")]
+        public IActionResult GetCollaboratorsWithRedis()
+        {
+            try
+            {
+                int userId = Convert.ToInt32(User.FindFirst("UserID").Value);
+                string cacheKey = $"UserCollaborators_{userId}";
+
+                // Check if data exists in Redis cache
+                var cachedCollaborators = _cache.GetString(cacheKey);
+                if (!string.IsNullOrEmpty(cachedCollaborators))
+                {
+                    var collaboratorsFromCache = JsonConvert.DeserializeObject<List<CollaboratorEntity>>(cachedCollaborators);
+                    return Ok(new { Success = true, Message = "Collaborators retrieved successfully from cache!", Data = collaboratorsFromCache });
+                }
+
+                // If cache miss, fetch from database
+                var collaborators = collaboratorManager.GetCollaboratorsByUser(userId);
+
+                if (collaborators == null || collaborators.Count == 0)
+                {
+                    return NotFound(new { Success = false, Message = "No collaborators found for this user." });
+                }
+
+                // Store data in Redis cache with a 10-minute expiration
+                var serializedCollaborators = JsonConvert.SerializeObject(collaborators);
+                var options = new DistributedCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+                _cache.SetString(cacheKey, serializedCollaborators, options);
+
+                return Ok(new { Success = true, Message = "Collaborators retrieved successfully from database!", Data = collaborators });
             }
             catch (Exception ex)
             {

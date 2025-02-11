@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CommonLayer.Models;
 using FundooNotesApi.Helpers;
+using GreenPipes.Caching;
 using ManagerLayer.Interfaces;
 using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entities;
 
@@ -23,15 +27,16 @@ namespace FundooNotesApi.Controllers
         private readonly IBus _bus;
         private readonly FundooDBContext dbContext;
         private readonly ILogger<UsersController> _logger;
-
+        private readonly IDistributedCache _cache;
 
         // Constructor to initialize the dependencies for user manager and RabbitMQ bus
-        public UsersController(IUserManager manager, IBus bus, FundooDBContext dbContext, ILogger<UsersController> logger)
+        public UsersController(IUserManager manager, IBus bus, FundooDBContext dbContext, ILogger<UsersController> logger, IDistributedCache _cache)
         {
             this.manager = manager;
             this._bus = bus;
             this.dbContext = dbContext;
             this._logger = logger;
+            this._cache = _cache;
         }
 
         // Endpoint for user registration
@@ -111,6 +116,7 @@ namespace FundooNotesApi.Controllers
 
                 try
                 {
+                    // Send the password reset email to the user
                     Send send = new Send();
                     send.SendMail(forgetPasswordModel.Email, forgetPasswordModel.Token);
                 }
@@ -120,6 +126,7 @@ namespace FundooNotesApi.Controllers
                     return BadRequest(new ResponseModel<string> { Success = false, Message = "Failed to send email", Data = emailEx.Message });
                 }
 
+                // Send a message to the RabbitMQ queue for further processing
                 Uri uri = new Uri("rabbitmq://localhost/FunDooNotesEmailQueue");
                 var endPoint = await _bus.GetSendEndpoint(uri);
                 await endPoint.Send(forgetPasswordModel);
@@ -129,6 +136,7 @@ namespace FundooNotesApi.Controllers
             }
             catch (Exception ex)
             {
+                // Handle unexpected errors and log the exception
                 _logger.LogError(ex, "Error occurred in ForgetPassword API for Email: {Email}", email);
                 return BadRequest(new ResponseModel<string> { Success = false, Message = "Mail not sent", Data = ex.Message });
             }
@@ -171,6 +179,46 @@ namespace FundooNotesApi.Controllers
             }
         }
 
+        [HttpGet("GetAllUsersWithRedis")]
+        public IActionResult GetAllUsersWithRedis()
+        {
+            try
+            {
+                // Define cache key
+                string cacheKey = "AllUsers";
+
+                // Try to get data from Redis cache
+                var cachedUsers = _cache.GetString(cacheKey);
+                if (!string.IsNullOrEmpty(cachedUsers))
+                {
+                    var usersFromCache = JsonConvert.DeserializeObject<List<UserEntity>>(cachedUsers);
+                    return Ok(new { Success = true, Message = "Users fetched successfully from cache!", Data = usersFromCache });
+                }
+
+                // If cache is empty, fetch from database
+                var users = dbContext.Users.ToList();
+
+                if (users.Count > 0)
+                {
+                    // Store the result in cache with expiration time of 10 minutes
+                    var serializedUsers = JsonConvert.SerializeObject(users);
+                    var options = new DistributedCacheEntryOptions()
+                        .SetAbsoluteExpiration(TimeSpan.FromMinutes(10));
+
+                    _cache.SetString(cacheKey, serializedUsers, options);
+
+                    return Ok(new { Success = true, Message = "Users fetched successfully from database!", Data = users });
+                }
+                else
+                {
+                    return NotFound(new { Success = false, Message = "No users found!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
+            }
+        }
 
         //---------------------------------------------------API Review Task--------------------------------------------------------------------------
 
