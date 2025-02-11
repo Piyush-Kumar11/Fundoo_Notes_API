@@ -77,3 +77,15 @@ C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\obj\Debug\netcoreapp3.
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\obj\Debug\netcoreapp3.1\FundooNotesApi.dll
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\obj\Debug\netcoreapp3.1\FundooNotesApi.pdb
 C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\obj\Debug\netcoreapp3.1\FundooNotesApi.genruntimeconfig.cache
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\Pipelines.Sockets.Unofficial.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\StackExchange.Redis.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\System.ComponentModel.Annotations.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\System.IO.Pipelines.dll
+C:\Users\Piyush\Desktop\FundooNotesProject\FundooNotesApi\bin\Debug\netcoreapp3.1\System.Runtime.CompilerServices.Unsafe.dll

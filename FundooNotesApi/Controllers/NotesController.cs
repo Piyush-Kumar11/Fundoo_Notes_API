@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using CommonLayer.Models;
 using ManagerLayer.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using RepositoryLayer.Context;
 using RepositoryLayer.Entities;
 using RepositoryLayer.Migrations;
@@ -20,12 +24,14 @@ namespace FundooNotesApi.Controllers
         private readonly INotesManager notesManager;
         private readonly FundooDBContext dbContext;
         private readonly ILogger<NotesController> _logger;
+        private readonly IDistributedCache distributedCache;
 
-        public NotesController(INotesManager notesManager, FundooDBContext dbContext,ILogger<NotesController> logger)
+        public NotesController(INotesManager notesManager, FundooDBContext dbContext,ILogger<NotesController> logger, IDistributedCache distributedCache)
         {
             this.notesManager = notesManager;
             this.dbContext = dbContext;
             _logger = logger;
+            this.distributedCache = distributedCache;
         }
 
         [Authorize]
@@ -134,6 +140,62 @@ namespace FundooNotesApi.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("GetAllNotesWithRedis")]
+        public async Task<IActionResult> GetAllNotesWithRedis()
+        {
+            try
+            {
+                var userIdClaim = User.FindFirst("UserID");
+                if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
+                {
+                    return Unauthorized(new { Success = false, Message = "User not authorized" });
+                }
+
+                int userId = Convert.ToInt32(userIdClaim.Value);
+
+                // Define cache key
+                string cacheKey = $"NotesList_{userId}";
+                string serializedNotes;
+                List<NotesEntity> notes = new List<NotesEntity>();
+
+                // Check if data is available in Redis
+                var cachedNotes = await distributedCache.GetStringAsync(cacheKey);
+                if (!string.IsNullOrEmpty(cachedNotes))
+                {
+                    serializedNotes = Encoding.UTF8.GetString(Convert.FromBase64String(cachedNotes));
+                    notes = JsonConvert.DeserializeObject<List<NotesEntity>>(serializedNotes);
+                }
+                else
+                {
+                    notes = notesManager.FindAllNotes(userId);
+
+                    if (notes.Count > 0)
+                    {
+                        serializedNotes = JsonConvert.SerializeObject(notes);
+                        var cacheOptions = new DistributedCacheEntryOptions()
+                            .SetAbsoluteExpiration(TimeSpan.FromMinutes(20))
+                            .SetSlidingExpiration(TimeSpan.FromMinutes(5));
+
+                        await distributedCache.SetStringAsync(cacheKey, Convert.ToBase64String(Encoding.UTF8.GetBytes(serializedNotes)), cacheOptions);
+                    }
+                }
+
+                if (notes.Count > 0)
+                {
+                    return Ok(new { Success = true, Message = "Notes fetched successfully!", Data = notes });
+                }
+                else
+                {
+                    return NotFound(new { Success = false, Message = "No notes found for the user!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
+            }
+        }
 
         [Authorize]
         [HttpGet]
