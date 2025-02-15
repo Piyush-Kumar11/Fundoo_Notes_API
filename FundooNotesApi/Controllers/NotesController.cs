@@ -413,7 +413,7 @@ namespace FundooNotesApi.Controllers
 
                 if (notes.Count == 0)
                 {
-                    return NotFound(new { Success = false, Message = "No matching notes found!" });
+                    return BadRequest(new { Success = false, Message = "No matching notes found!" });
                 }
 
                 return Ok(new { Success = true, Message = "Notes fetched successfully!", Data = notes });
@@ -432,6 +432,41 @@ namespace FundooNotesApi.Controllers
             int count = dbContext.Notes.Count(n => n.UserID == userId);
 
             return Ok(new { Success = true, Message = "User note count retrieved!", Data = count });
+        }
+
+        //---------------------------------
+        [Authorize]
+        [HttpGet]
+        [Route("GetLabelCountForNotes")]
+        public IActionResult GetLabelCountForNotes()
+        {
+            try
+            {
+                int userId = Convert.ToInt32(User.FindFirst("UserID").Value);
+
+                var labelCounts = dbContext.Notes
+                    .Where(n => n.UserID == userId)
+                    .Select(n => new
+                    {
+                        NoteId = n.NotesId,
+                        Title = n.Title,
+                        Description = n.Description,
+                        LabelCount = dbContext.Notes.Count(l => l.NotesId == n.NotesId)
+                    }).ToList();
+
+                if (labelCounts.Count > 0)
+                {
+                    return Ok(new { Success = true, Message = "Label count fetched successfully!", Data = labelCounts });
+                }
+                else
+                {
+                    return BadRequest(new { Success = false, Message = "No notes found for the user!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
+            }
         }
     }
 }

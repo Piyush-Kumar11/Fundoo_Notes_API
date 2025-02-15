@@ -1,12 +1,71 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\fundoonotesapi\\controllers\\notescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|solutionrelative:controllers\\notescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\fundoonotesapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\fundoonotesapi\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|solutionrelative:controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NotesController.cs",
+              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\NotesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\NotesController.cs",
+              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\NotesController.cs",
+              "RelativeToolTip": "Controllers\\NotesController.cs",
+              "ViewState": "AgIAAKABAAAAAAAAAAAowNMBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-15T05:35:52.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Controllers\\UsersController.cs",
+              "ViewState": "AgIAABoBAAAAAAAAAAAuwJUBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-15T05:00:22.546Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "Controllers\\ProductController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADEAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-15T04:59:09.574Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

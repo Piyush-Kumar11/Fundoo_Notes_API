@@ -27,5 +27,8 @@ namespace RepositoryLayer.Context
         // DbSet representing the Collaborator table in the database.
         // The Collaborator property is mapped to the CollaboratorEntity class, which represents the structure of the table.
         public DbSet<CollaboratorEntity> Collaborators { get; set; }
+
+        public DbSet<ProductEntity> Products { get; set; }
+
     }
 }

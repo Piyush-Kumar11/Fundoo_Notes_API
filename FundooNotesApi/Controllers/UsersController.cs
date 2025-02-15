@@ -291,8 +291,116 @@ namespace FundooNotesApi.Controllers
             int oldestAge = users.Max(u => DateTime.Today.Year - u.DOB.Year);
             int youngestAge = users.Min(u => DateTime.Today.Year - u.DOB.Year);
 
-            return Ok(new{Success = true, Message = "Oldest and youngest user age retrieved!", Data = new { Oldest = oldestAge, Youngest = youngestAge } });
+            return Ok(new { Success = true, Message = "Oldest and youngest user age retrieved!", Data = new { Oldest = oldestAge, Youngest = youngestAge } });
+        }
+
+        //----------------------------------------
+        [HttpGet("GetUserWithNotes")]
+        public IActionResult GetUserWithNotes(int userId)
+        {
+            try
+            {
+                var userWithNotes = dbContext.Users.Where(u => u.UserID == userId)
+                    .Select(u => new
+                    {
+                        UserName = u.FirstName + " " + u.LastName,
+                        Notes = dbContext.Notes
+                            .Where(n => n.UserID == u.UserID)
+                            .Select(n => new
+                            {
+                                NoteId = n.NotesId,
+                                Title = n.Title,
+                                Description = n.Description,
+                                CreatedAt = n.CreatedAt
+                            }).ToList()
+                    }).FirstOrDefault();
+
+                if (userWithNotes == null)
+                {
+                    return BadRequest(new { Success = false, Message = "User not found!" });
+                }
+
+                return Ok(new { Success = true, Message = "User with notes fetched successfully!", Data = userWithNotes });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
+            }
+        }
+
+        [HttpGet("GetUserNotes")]
+        public IActionResult GetUserNotes()
+        {
+            try
+            {
+                var notesWithUser = dbContext.Set<NotesEntity>()
+                    .Select(n => new
+                    {
+                        UserName = n.NotesUser.FirstName + " " + n.NotesUser.LastName,
+                        NoteTitle = n.Title,
+                        NoteDescription = n.Description
+                    }).ToList();
+
+                if (notesWithUser == null)
+                {
+                    return BadRequest(new { Success = false, Message = "No notes found!" });
+                }
+
+                return Ok(new { Success = true, Message = "Notes with usernames fetched successfully!", Data = notesWithUser });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("GetUserWithNotesAndCollaborators")]
+        public IActionResult GetUserWithNotesAndCollaborators()
+        {
+            try
+            {
+                var userIdClaim = User.FindFirst("UserID");
+                if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
+                {
+                    return BadRequest(new { Success = false, Message = "User not authorized" });
+                }
+
+                int userId = Convert.ToInt32(userIdClaim.Value);
+
+                var userData = dbContext.Users
+                    .Where(u => u.UserID == userId)
+                    .Select(user => new
+                    {
+                        UserName = user.FirstName + " " + user.LastName,
+                        Notes = dbContext.Notes.Where(note => note.UserID == userId)
+                            .Select(note => new
+                            {
+                                NoteId = note.NotesId,
+                                Title = note.Title,
+                                Description = note.Description,
+                                Collaborators = dbContext.Collaborators.Where(collab => collab.NotesId == note.NotesId)
+                                    .Select(collab => new
+                                    {
+                                        CollaboratorEmail = collab.CollaboratorEmail
+                                    }).ToList()
+                            }).ToList()
+                    }).FirstOrDefault();
+
+                if (userData != null)
+                {
+                    return Ok(new { Success = true, Message = "User data with notes and collaborators fetched successfully!", Data = userData });
+                }
+                else
+                {
+                    return NotFound(new { Success = false, Message = "User data not found!" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Success = false, Message = "Internal Server Error", Error = ex.Message });
+            }
         }
     }
-
 }
