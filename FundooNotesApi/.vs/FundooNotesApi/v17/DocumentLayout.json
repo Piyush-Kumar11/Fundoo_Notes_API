@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\fundoonotesapi\\controllers\\notescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|solutionrelative:controllers\\notescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\fundoonotesapi\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|solutionrelative:startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\fundoonotesapi\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|solutionrelative:controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\fundoonotesapi\\controllers\\notescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|solutionrelative:controllers\\notescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6B7D97C5-BEB7-4AB8-B04C-578D7B3A0401}|FundooNotesApi.csproj|c:\\users\\piyush\\desktop\\fundoonotesproject\\fundoonotesapi\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -27,14 +31,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "NotesController.cs",
-              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\NotesController.cs",
-              "RelativeDocumentMoniker": "Controllers\\NotesController.cs",
-              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\NotesController.cs",
-              "RelativeToolTip": "Controllers\\NotesController.cs",
-              "ViewState": "AgIAALcBAAAAAAAAAAAuwNMBAAAAAAAAAAAAAA==",
+              "Title": "Startup.cs",
+              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Startup.cs",
+              "RelativeDocumentMoniker": "Startup.cs",
+              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Startup.cs",
+              "RelativeToolTip": "Startup.cs",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAswJIAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-15T05:35:52.813Z",
+              "WhenOpened": "2025-02-22T06:26:15.722Z",
               "EditorCaption": ""
             },
             {
@@ -45,7 +49,7 @@
               "RelativeDocumentMoniker": "Controllers\\UsersController.cs",
               "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\UsersController.cs",
               "RelativeToolTip": "Controllers\\UsersController.cs",
-              "ViewState": "AgIAAH0BAAAAAAAAAAAYwJUBAAABAAAAAAAAAA==",
+              "ViewState": "AgIAACgAAAAAAAAAAAAQwJUBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-15T05:00:22.546Z",
               "EditorCaption": ""
@@ -53,6 +57,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "NotesController.cs",
+              "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\NotesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\NotesController.cs",
+              "ToolTip": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\NotesController.cs",
+              "RelativeToolTip": "Controllers\\NotesController.cs",
+              "ViewState": "AgIAAMsBAAAAAAAAAAAjwNMBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-15T05:35:52.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "ProductController.cs",
               "DocumentMoniker": "C:\\Users\\Piyush\\Desktop\\FundooNotesProject\\FundooNotesApi\\Controllers\\ProductController.cs",
               "RelativeDocumentMoniker": "Controllers\\ProductController.cs",
@@ -60,8 +77,7 @@
               "RelativeToolTip": "Controllers\\ProductController.cs",
               "ViewState": "AgIAABsAAAAAAAAAAAAYwDEAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-15T04:59:09.574Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-15T04:59:09.574Z"
             }
           ]
         }

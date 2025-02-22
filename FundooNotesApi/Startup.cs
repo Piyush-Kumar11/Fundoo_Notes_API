@@ -135,6 +135,16 @@ namespace FundooNotesApi
                 };
             });
             services.AddStackExchangeRedisCache(options => { options.Configuration = Configuration["RedisCacheUrl"]; });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -152,6 +162,8 @@ namespace FundooNotesApi
 
             // Redirects all HTTP requests to HTTPS for secure communication.
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAll");
 
             // Adds routing middleware to the pipeline for matching HTTP requests to routes.
             app.UseRouting();
